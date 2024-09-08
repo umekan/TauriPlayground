@@ -4,7 +4,6 @@ use std::io::Read;
 use encoding_rs::UTF_8;
 use encoding_rs_io::DecodeReaderBytesBuilder;
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 pub fn file_concat(full_paths: Vec<String>) -> String {
     let mut result = String::new();

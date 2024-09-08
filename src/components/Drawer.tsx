@@ -4,20 +4,17 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Box from '@mui/material/Box';
 
 export class DrawerProps {
-  items: string[];
-  selectedPage: string;
-  onSelectPage: (page: string) => void;
+  items: { name: string, icon: JSX.Element }[];
+  selectedPageIndex: number;
+  onSelectPage: (page: number) => void;
 
-  constructor(items: string[], selectedPage: string, onSelectPage: (page: string) => void) {
+  constructor(items: { name: string, icon: JSX.Element }[], selectedPage: number, onSelectPage: (page: number) => void) {
     this.items = items;
-    this.selectedPage = selectedPage;
+    this.selectedPageIndex = selectedPage;
     this.onSelectPage = onSelectPage;
   }
 }
@@ -27,14 +24,14 @@ interface TemporaryDrawerProps {
 }
 
 export function TemporaryDrawer(props: TemporaryDrawerProps) {
-  const { items, selectedPage, onSelectPage } = props.drawerProps;
+  const { items, selectedPageIndex, onSelectPage } = props.drawerProps;
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
-  const handleListItemClick = (page: string) => {
+  const handleListItemClick = (page: number) => {
     onSelectPage(page);
     setOpen(false);
   };
@@ -43,13 +40,11 @@ export function TemporaryDrawer(props: TemporaryDrawerProps) {
     <div>
       <Box sx={{ minWidth: 300 }}>
       <List>
-        {items.map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton selected={selectedPage === text} onClick={() => handleListItemClick(text)}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+        {items.map((page, index) => (
+          <ListItem key={page.name} disablePadding>
+            <ListItemButton selected={selectedPageIndex === index} onClick={() => handleListItemClick(index)}>
+              {page.icon}
+              <ListItemText primary={page.name} />
             </ListItemButton>
           </ListItem>
         ))}
