@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "textfileconsole",
+    "productName": "taurisample",
     "version": "0.1.0"
   },
   "tauri": {
@@ -29,9 +29,9 @@
     },
     "windows": [
       {
-        "title": "textfileconsole",
-        "width": 800,
-        "height": 600
+        "title": "Tauri Samples",
+        "width": 1000,
+        "height": 800
       }
     ],
     "security": {
@@ -40,7 +40,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.textfileconsole.app",
+      "identifier": "com.taurisample.app",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
