@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod text_file_analyzer;
-use text_file_analyzer::file_concat;
+
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -12,7 +12,9 @@ fn greet(name: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, file_concat])
+        .invoke_handler(tauri::generate_handler![greet,
+            text_file_analyzer::file_concat,
+            text_file_analyzer::extract_characters])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

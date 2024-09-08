@@ -36,10 +36,16 @@ export default function InputFileUpload() {
 
   const handleConcat = async (): Promise<string> => {
     // rust側では引数名はスネークケースなんだけど、tauriがキャメルケースに変換してしまう
-    const concatenated = await tauri.invoke<string>('file_concat', { fullPathes: files });
+    const concatenated = await tauri.invoke<string>('file_concat', { fullPaths: files });
     updateConcatenated(concatenated);
     return concatenated
-}
+  };
+
+  const extractCharacters = async (): Promise<string> => {
+    const extracted = await tauri.invoke<string>('extract_characters', { fullPaths: files });
+    updateConcatenated(extracted);
+    return extracted
+  }
 
   return (
     <div>
@@ -66,6 +72,10 @@ export default function InputFileUpload() {
       <Button component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<ContentPasteSearchIcon />} sx={buttonSx}
         onClick={handleConcat}>
         Concat
+      </Button>
+      <Button component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<ContentPasteSearchIcon />} sx={buttonSx}
+        onClick={extractCharacters}>
+        使用文字の抽出
       </Button>
       </p>
       <p>{concatenated}</p>
