@@ -1,7 +1,9 @@
-# Tauri + React + Typescript
+# 概要
+個人の学習用のリポジトリです。
+Tauri + React + TypeScriptでのデスクトップ開発を試しています。
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
 
-## Recommended IDE Setup
+# ライセンス
+特にライセンスなども無いので、もし同じように学習中の方がいたら、ブログなどに書く際には参考リンクを載せてもらいたいですが（一般的マナーとして）、特に強制は無いです。
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+需要にマッチするとも思えませんが、ツールとして使いたい場合も.exeや.dmgを好きにDLして使ってもらって構いません。（Apple Developerではないため署名しておらず、`xattr -rc *.app`しないとMacでは開けません。）
