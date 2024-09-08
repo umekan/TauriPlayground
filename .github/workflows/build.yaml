@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: tauri-app
-          path: src-tauri/target/release/bundle/msi/*.exe
+          path: src-tauri/target/release/*.exe
 
       - uses: tauri-apps/tauri-action@v0
         env:
