@@ -2,6 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import { TemporaryDrawer, DrawerProps } from "./components/Drawer";
 import FileSelectButton from "./components/FileSelectButton";
+import NodeTest from "./components/NodeTest";
 import Home from "./components/Home";
 import TreeView from "./components/TreeView";
 import SaveTest from "./components/SaveTest";
@@ -9,6 +10,8 @@ import HomeIcon from '@mui/icons-material/HomeSharp';
 import FormatColorTextOutlinedIcon from '@mui/icons-material/FormatColorTextOutlined';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import SaveAsOutlinedIcon from '@mui/icons-material/SaveAsOutlined';
+import LinearScaleIcon from '@mui/icons-material/LinearScale';
+
 
 function App() {
   // アイコンも渡す
@@ -16,7 +19,8 @@ function App() {
     { name: 'Home', icon: <HomeIcon /> },
     { name: 'File List', icon: <FormatColorTextOutlinedIcon /> },
     { name: 'Tree View', icon: <AccountTreeOutlinedIcon /> },
-    { name: 'Save Test', icon: <SaveAsOutlinedIcon /> }
+    { name: 'Save Test', icon: <SaveAsOutlinedIcon /> },
+    { name: 'Node Test', icon: <LinearScaleIcon /> }
   ];
 
   const [selectedPage, setSelectedPage] = useState(0);
@@ -30,6 +34,7 @@ function App() {
       {selectedPage === 1 && <FileSelectButton />}
       {selectedPage === 2 && <TreeView />}
       {selectedPage === 3 && <SaveTest />}
+      {selectedPage === 4 && <NodeTest />}
     </div>
   );
 }
