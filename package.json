@@ -17,6 +17,7 @@
     "@mui/utils": "^6.0.2",
     "@mui/x-tree-view": "^7.16.0",
     "@tauri-apps/api": "^1",
+    "@tauri-apps/plugin-sql": "^2.0.0-rc.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reactflow": "^11.11.4"

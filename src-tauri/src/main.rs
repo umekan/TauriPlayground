@@ -12,6 +12,7 @@ fn greet(name: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_sql::Builder::default().build())
         .invoke_handler(tauri::generate_handler![greet,
             text_file_analyzer::file_concat,
             text_file_analyzer::extract_characters])
