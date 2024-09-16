@@ -55,7 +55,7 @@ export function TemporaryDrawer(props: TemporaryDrawerProps) {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>メニュー</Button>
+      <Button variant="contained" onClick={toggleDrawer(true)}>メニュー</Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>

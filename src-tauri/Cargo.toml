@@ -11,12 +11,12 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "dialog-open", "dialog-save", "fs-read-file", "fs-write-file", "shell-open"] }
+tauri = { version = "1", features = [ "path-all", "dialog-open", "dialog-save", "fs-read-file", "fs-write-file", "shell-open"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 encoding_rs = "0.8.34"
 encoding_rs_io = "0.1.7"
-tauri-plugin-sql = { version = "2.0.0-rc.2", features = ["sqlite"] }
+rusqlite = { version = "0.32.1", features = ["bundled"] }
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
