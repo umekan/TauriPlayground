@@ -5,17 +5,18 @@ use rusqlite::{ Connection, Result };
 
 const LOCAL_DB_FILE_NAME:&str = "local.db";
 
-static mut local_db_file_path: String = String::new();
+pub static mut LOCAL_DB_FILE_PATH: String = String::new();
 
 pub fn set_local_db_file_path(directory: PathBuf) {
     unsafe {
-        local_db_file_path = directory.join(LOCAL_DB_FILE_NAME).to_str().unwrap().to_string();
+        LOCAL_DB_FILE_PATH = directory.join(LOCAL_DB_FILE_NAME).to_str().unwrap().to_string();
     }
 }
 
 // データベースとテーブルを作成する関数
 pub fn create_db_and_table_if_needed() -> Result<()> {
-    let connection = Connection::open("local.db")?;
+    let path = unsafe { LOCAL_DB_FILE_PATH.clone() };
+    let connection = Connection::open(path)?;
 
     // Diaryテーブル
     let columns = [
