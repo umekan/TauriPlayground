@@ -21,7 +21,7 @@ export default function InputFileUpload() {
         extensions: ['txt']
       }]
     });
-  
+
     if (Array.isArray(selected)) {
       updateFiles(selected);
     } else if (selected) {

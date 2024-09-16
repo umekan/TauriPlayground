@@ -1,22 +1,27 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::path::PathBuf;
-use rusqlite::{ Connection, Result };
+use rusqlite::{ Connection, Result, params };
+use lazy_static::lazy_static;
+use parking_lot::RwLock;
+use std::sync::Arc;
 
 const LOCAL_DB_FILE_NAME:&str = "local.db";
 
-pub static mut LOCAL_DB_FILE_PATH: String = String::new();
+lazy_static! {
+    pub static ref LOCAL_DB_FILE_PATH: Arc<RwLock<String>> = Arc::new(RwLock::new(String::new()));
+}
 
 pub fn set_local_db_file_path(directory: PathBuf) {
-    unsafe {
-        LOCAL_DB_FILE_PATH = directory.join(LOCAL_DB_FILE_NAME).to_str().unwrap().to_string();
-    }
+
+    let path = directory.join(LOCAL_DB_FILE_NAME).to_str().unwrap().to_string();
+    let mut db_file_path = LOCAL_DB_FILE_PATH.write();
+    *db_file_path = path;
 }
 
 // データベースとテーブルを作成する関数
 pub fn create_db_and_table_if_needed() -> Result<()> {
-    let path = unsafe { LOCAL_DB_FILE_PATH.clone() };
-    let connection = Connection::open(path)?;
+    let connection = Connection::open(LOCAL_DB_FILE_PATH.read().clone())?;
 
     // Diaryテーブル
     let columns = [
@@ -57,3 +62,19 @@ fn create_table(connection: &Connection, table_name: &str, columns: &[(&str, &st
     Ok(())
 }
 
+#[tauri::command]
+pub fn insert_diary(name: &str, content: &str, language_id: i64) {
+    let connection = Connection::open(LOCAL_DB_FILE_PATH.read().clone()).unwrap();
+    connection.execute(
+        "INSERT INTO Diary (name, content, language_id) VALUES (?1, ?2, ?3)",
+        params![name, content, language_id],
+    ).unwrap();
+}
+
+pub fn insert_tag(name: &str) {
+    let connection = Connection::open(LOCAL_DB_FILE_PATH.read().clone()).unwrap();
+    connection.execute(
+        "INSERT INTO Tag (name) VALUES (?1)",
+        params![name],
+    ).unwrap();
+}

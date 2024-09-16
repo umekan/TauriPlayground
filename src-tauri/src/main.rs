@@ -1,8 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod db_control;
 mod text_file_analyzer;
+mod db_control;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -18,16 +18,15 @@ fn main() {
             if let Err(e) = db_control::create_db_and_table_if_needed() {
                 eprintln!("Failed to create database and table: {}", e);
             } else {
-                unsafe {
-                    println!("Database and table created successfully. Path: {}", db_control::LOCAL_DB_FILE_PATH);
-                }
+                println!("Database and table created successfully. Path: {}", db_control::LOCAL_DB_FILE_PATH.read().clone());
             }
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
             greet,
             text_file_analyzer::file_concat,
-            text_file_analyzer::extract_characters
+            text_file_analyzer::extract_characters,
+            db_control::insert_diary
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
