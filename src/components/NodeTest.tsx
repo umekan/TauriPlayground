@@ -10,15 +10,15 @@ import { Box } from "@mui/material";
 
 export default function NodeTest() {
     const nodeTypes = useMemo(() => ({ CustomNode: Node }), []);
-    
+
     const initialNodes = [
         { id: '1', position: { x: 0, y: 0 }, data: { label: '1' }, type: 'CustomNode' },
         { id: '2', position: { x: 0, y: 100 }, data: { label: '3' }, type: 'CustomNode' },
     ];
     const initialEdges = [{ id: '1-2', source: '1', target: '2' }];
 
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [nodes, , onNodesChange] = useNodesState(initialNodes);
+    const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
     return (
         <div>
