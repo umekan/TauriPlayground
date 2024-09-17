@@ -23,11 +23,11 @@ export default function DiaryThumbnail(prop: DiaryThumbnailProps) {
 
     return (
         <div>
-            <Box sx={{ width: 400, height: 400 }}>
-                <p>
-                    <h2>{prop.name} ({prop.language})</h2>
+            <Box sx={{ width: 400, height: 500 }}>
+                <Box sx={{ width: 400, height: 100 }}>
+                    <h3>{prop.name} ({prop.language})</h3>
                     <FormControl fullWidth>
-                        <InputLabel variant="standard" htmlFor="uncontrolled-native">Style</InputLabel>
+                        <InputLabel variant="standard" htmlFor="uncontrolled-native">{Styles[styleIndex].name}</InputLabel>
                         <Select
                             labelId="demo-simple-select-autowidth-label"
                             id="demo-simple-select-autowidth"
@@ -39,13 +39,16 @@ export default function DiaryThumbnail(prop: DiaryThumbnailProps) {
                             ))}
                         </Select>
                     </FormControl>
-                </p>
-                <Box sx={{ width: 400, height: 250 }}>
+                </Box>
+                <Box sx={{ width: 400, height: 250, fontSize: 14, lineHeight: 1.1, overflow:'auto'}}>
                     <SyntaxHighlighter language={prop.highlight_label} style={Styles[styleIndex].style}>
                         {prop.content}
                     </SyntaxHighlighter>
                 </Box>
-                <p>{prop.description}</p>
+                <Box sx={{ width: 400, height: 150, fontSize: 14, lineHeight: 1.1, overflow:'auto',
+                    backgroundColor: 'gray', wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>
+                    {prop.description}
+                </Box>
             </Box>
         </div>
     );
