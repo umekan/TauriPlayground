@@ -26,7 +26,13 @@ fn main() {
             greet,
             text_file_analyzer::file_concat,
             text_file_analyzer::extract_characters,
-            db_control::insert_diary
+            db_control::insert_diary,
+            db_control::get_all_diaries,
+            db_control::update_diary,
+            db_control::insert_tag,
+            db_control::get_tag_list,
+            db_control::insert_diary_tag_relation,
+            db_control::get_diaries_by_tag_id,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

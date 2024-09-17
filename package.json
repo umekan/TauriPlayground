@@ -17,15 +17,19 @@
     "@mui/utils": "^6.0.2",
     "@mui/x-tree-view": "^7.16.0",
     "@tauri-apps/api": "^1",
+    "@types/papaparse": "^5.3.14",
     "@uiw/react-md-editor": "^4.0.4",
+    "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-syntax-highlighter": "^15.5.0",
     "reactflow": "^11.11.4"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"

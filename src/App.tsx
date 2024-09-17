@@ -13,6 +13,7 @@ import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import SaveAsOutlinedIcon from '@mui/icons-material/SaveAsOutlined';
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
+import Diaries from "./components/Diaries";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
     { name: 'Save Test', icon: <SaveAsOutlinedIcon /> },
     { name: 'Node Test', icon: <LinearScaleIcon /> },
     { name: 'Markdown Test', icon: <FormatColorTextIcon /> },
+    { name: 'Diary Test', icon: <FormatColorTextIcon /> },
   ];
 
   const [selectedPage, setSelectedPage] = useState(0);
@@ -39,6 +41,7 @@ function App() {
       {selectedPage === 3 && <SaveTest />}
       {selectedPage === 4 && <NodeTest />}
       {selectedPage === 5 && <MarkdownTest />}
+      {selectedPage === 6 && <Diaries />}
     </div>
   );
 }
