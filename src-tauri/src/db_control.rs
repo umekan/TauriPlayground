@@ -30,6 +30,13 @@ pub struct ProgramingLanguage{
     name: String,
 }
 
+#[derive(serde::Serialize)]
+#[serde(tag = "type")]
+pub struct TagRelation{
+    diary_id: i64,
+    tag_id: i64,
+}
+
 const LOCAL_DB_FILE_NAME:&str = "local.db";
 
 lazy_static! {
@@ -173,6 +180,20 @@ pub fn insert_diary_tag_relation(diary_id: i64, tag_id: i64) {
         "INSERT INTO DiaryTagRelation (diary_id, tag_id) VALUES (?1, ?2)",
         params![diary_id, tag_id],
     ).unwrap();
+}
+
+/// 全ての日記とタグの関連を取得する
+#[tauri::command]
+pub fn get_all_diary_tag_relations() -> Vec<TagRelation> {
+    let connection = Connection::open(LOCAL_DB_FILE_PATH.read().clone()).unwrap();
+    let mut statement = connection.prepare("SELECT diary_id, tag_id FROM DiaryTagRelation").unwrap();
+    let tag_relation_iter = statement.query_map([], |row| {
+        Ok(TagRelation {
+            diary_id: row.get(0)?,
+            tag_id: row.get(1)?,
+        })
+    }).unwrap();
+    tag_relation_iter.map(|tag_relation| tag_relation.unwrap()).collect()
 }
 
 /// タグIDから紐づく日記を取得する

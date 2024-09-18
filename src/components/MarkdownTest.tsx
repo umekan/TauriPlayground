@@ -9,7 +9,12 @@ export default function App() {
 
   const insert_diary = async () => {
     const dateTime = new Date().toISOString();
-    await tauri.invoke('insert_diary', { name: dateTime, content: value, languageId: 1 });
+    await tauri.invoke('insert_diary', {
+      id:1,
+      name: dateTime,
+      content: value,
+      description: '追加した日記だよ。これがちゃんと追加できてたら嬉しいな。C#コードのはずだよ。',
+      languageId: 6 });
   }
 
   return (

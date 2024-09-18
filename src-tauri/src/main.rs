@@ -32,6 +32,7 @@ fn main() {
             db_control::insert_tag,
             db_control::get_tag_list,
             db_control::insert_diary_tag_relation,
+            db_control::get_all_diary_tag_relations,
             db_control::get_diaries_by_tag_id,
         ])
         .run(tauri::generate_context!())

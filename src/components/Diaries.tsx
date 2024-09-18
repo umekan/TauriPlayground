@@ -1,64 +1,39 @@
-import { useEffect, useState } from "react";
 import DiaryThumbnail from "./DiaryThumbnail";
-import { tauri } from '@tauri-apps/api';
-import Papa from 'papaparse';
+import { Diary, Language, Tag, DiaryTag } from "./DiaryRoot";
 
-type Diary = {
-    id: number;
-    name: string;
-    content: string;
-    description: string;
-    language_id: number;
+interface Prop {
+    diaries: Diary[];
+    languages: Language[];
+    tags: Tag[];
+    tagMap: DiaryTag[];
+    onDeleteDiary: (index: number) => void;
 }
 
-type Language = {
-    language_id: number;
-    highlight_label: string;
-    name: string;
-}
-
-export default function Diaries() {
-    const [diaries, setDiaries] = useState<Array<Diary>>([]);
-    const [languages, setLanguages] = useState<Array<Language>>([]);
-    const getAllDiaries = async () => {
-        await loadLanguages();
-        const diaries = await tauri.invoke<Array<Diary>>('get_all_diaries');
-        setDiaries(diaries);
-    }
-
-    const loadLanguages = async () => {
-        const response = await fetch('/language.csv');
-        const reader = response.body?.getReader();
-        const result = await reader?.read();
-        const decoder = new TextDecoder('utf-8');
-        const csv = decoder.decode(result?.value);
-        const parsedData = Papa.parse(csv, { header: true });
-        setLanguages(parsedData.data as Array<Language>);
-    }
-
-    useEffect(() => {
-        getAllDiaries();
-    }, []);
-
+export default function Diaries(prop: Prop) {
     return (
         <>
-            <style>{gridStyle}</style>
-            <div className="diaries-grid">
-                {diaries.map(diary => {
-                    const language = languages.length > diary.language_id ? languages[diary.language_id] : undefined;
-                    const highlighterLabel = language ? language.highlight_label : 'plaintext';
-                    const name = language ? language.name : 'Unknown';
-                    return (
-                        <DiaryThumbnail
-                            key={diary.id} // keyを追加
-                            name={diary.name}
-                            highlight_label={highlighterLabel}
-                            language={name}
-                            content={diary.content}
-                            description={diary.description}
-                        />
-                    );
-                })}
+            {prop.diaries.length === 0 && <div>日記がありません。</div>}
+            {prop.diaries.length > 0 && <div>日記が{prop.diaries.length}件あります。</div>}
+            <div style={{ overflow: 'auto', height: 'calc(100vh - 200px)' }}>
+                <style>{gridStyle}</style>
+                <div className="diaries-grid">
+                    {prop.diaries.map((diary, index) => {
+                        const language = prop.languages.length > diary.language_id ? prop.languages[diary.language_id] : undefined;
+                        const highlighterLabel = language ? language.highlight_label : 'plaintext';
+                        const name = language ? language.name : 'Unknown';
+                        return (
+                            <DiaryThumbnail
+                                key={index}
+                                name={diary.name}
+                                highlight_label={highlighterLabel}
+                                language={name}
+                                content={diary.content}
+                                description={diary.description}
+                                onDelete={() => prop.onDeleteDiary(index)}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </>
     );
@@ -68,8 +43,7 @@ export default function Diaries() {
 const gridStyle = `
     .diaries-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(600px, 0fr));
         gap: 8px;
         padding: 16px;
-    }
-`;
+    }`;

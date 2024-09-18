@@ -13,7 +13,7 @@ import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import SaveAsOutlinedIcon from '@mui/icons-material/SaveAsOutlined';
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
-import Diaries from "./components/Diaries";
+import DiaryRoot from "./components/DiaryRoot";
 
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
       {selectedPage === 3 && <SaveTest />}
       {selectedPage === 4 && <NodeTest />}
       {selectedPage === 5 && <MarkdownTest />}
-      {selectedPage === 6 && <Diaries />}
+      {selectedPage === 6 && <DiaryRoot />}
     </div>
   );
 }
