@@ -12,7 +12,8 @@ interface Prop {
 export default function Diaries(prop: Prop) {
     return (
         <>
-            {prop.diaries.length === 0 && <div>日記がありません。</div>}
+            {prop.diaries.length === 0 && prop.languages.length === 0 && <div>Loading...</div>}
+            {prop.diaries.length === 0 && prop.languages.length > 0 && <div>日記がありません</div>}
             {prop.diaries.length > 0 && <div>日記が{prop.diaries.length}件あります。</div>}
             <div style={{ overflow: 'auto', height: 'calc(100vh - 200px)' }}>
                 <style>{gridStyle}</style>
@@ -21,6 +22,9 @@ export default function Diaries(prop: Prop) {
                         const language = prop.languages.length > diary.language_id ? prop.languages[diary.language_id] : undefined;
                         const highlighterLabel = language ? language.highlight_label : 'plaintext';
                         const name = language ? language.name : 'Unknown';
+                        const tags = prop.tagMap.filter(tag => tag.diary_id === diary.id).map(tag => {
+                            return prop.tags.find(tag_ => tag_.id === tag.tag_id)?.name;
+                        }).filter(tag => tag !== undefined) as string[];
                         return (
                             <DiaryThumbnail
                                 key={index}
@@ -30,6 +34,7 @@ export default function Diaries(prop: Prop) {
                                 content={diary.content}
                                 description={diary.description}
                                 onDelete={() => prop.onDeleteDiary(index)}
+                                tags={tags || []}
                             />
                         );
                     })}

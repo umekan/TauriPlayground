@@ -78,8 +78,6 @@ pub fn create_db_and_table_if_needed() -> Result<()> {
     ];
     create_table(&connection, "Tag", &columns)?;
 
-    insert_sample_data();
-
     Ok(())
 }
 
@@ -211,68 +209,4 @@ pub fn get_diaries_by_tag_id(tag_id: i64) -> Vec<Diary> {
         })
     }).unwrap();
     diary_iter.map(|diary| diary.unwrap()).collect()
-}
-
-fn insert_sample_data() {
-    let connection = Connection::open(LOCAL_DB_FILE_PATH.read().clone()).unwrap();
-    connection.execute(
-        "INSERT INTO Diary (id, name, content, description, language_id) VALUES (?1, ?2, ?3, ?4, ?5)",
-        params![
-            0,
-            "Sample Diary 1",
-            "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}",
-            "This is a sample diary 1.",
-            6
-        ],
-    ).unwrap();
-    connection.execute(
-        "INSERT INTO Diary (id, name, content, description, language_id) VALUES (?1, ?2, ?3, ?4, ?5)",
-        params![
-            1,
-            "Sample Diary 2",
-            "print(\"Hello, World!\")\n\ndef main():\n    print(\"This is a sample Python code.\")\n\nif __name__ == \"__main__\":\n    main()",
-            "This is a sample diary 2.",
-            32
-        ],
-    ).unwrap();
-    connection.execute(
-        "INSERT INTO Diary (id, name, content, description, language_id) VALUES (?1, ?2, ?3, ?4, ?5)",
-        params![
-            2,
-            "Sample Diary 3",
-            "fn main() {\n    println!(\"Hello, World!\");\n}\n\nfn sample_function() {\n    println!(\"This is a sample Rust code.\");\n}",
-            "This is a sample diary 3.",
-            35
-        ],
-    ).unwrap();
-
-    connection.execute(
-        "INSERT INTO Tag (name) VALUES (?1)",
-        params!["Sample Tag 1"],
-    ).unwrap();
-    connection.execute(
-        "INSERT INTO Tag (name) VALUES (?1)",
-        params!["Sample Tag 2"],
-    ).unwrap();
-    connection.execute(
-        "INSERT INTO Tag (name) VALUES (?1)",
-        params!["Sample Tag 3"],
-    ).unwrap();
-
-    connection.execute(
-        "INSERT INTO DiaryTagRelation (diary_id, tag_id) VALUES (?1, ?2)",
-        params![1, 1],
-    ).unwrap();
-    connection.execute(
-        "INSERT INTO DiaryTagRelation (diary_id, tag_id) VALUES (?1, ?2)",
-        params![2, 2],
-    ).unwrap();
-    connection.execute(
-        "INSERT INTO DiaryTagRelation (diary_id, tag_id) VALUES (?1, ?2)",
-        params![3, 3],
-    ).unwrap();
-    connection.execute(
-        "INSERT INTO DiaryTagRelation (diary_id, tag_id) VALUES (?1, ?2)",
-        params![3, 2],
-    ).unwrap();
 }

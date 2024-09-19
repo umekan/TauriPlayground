@@ -50,13 +50,13 @@ export default function DiaryRoot() {
     const [deleteDiaryIndex, setDeleteDiaryIndex] = useState<number | null>(null)
 
     const selectAllData = async () => {
-        await loadLanguages();
         const diaries = await tauri.invoke<Array<Diary>>('get_all_diaries');
         const tags = await tauri.invoke<Array<Tag>>('get_tag_list');
         const tagMap = await tauri.invoke<Array<DiaryTag>>('get_all_diary_tag_relations');
         setDiaries(diaries);
         setTags(tags);
         setTagMap(tagMap);
+        await loadLanguages();
     }
 
     const loadLanguages = async () => {

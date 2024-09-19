@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Button, Chip, FormControl, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { Styles } from '../HighlightPatterns';
 import { useState, useEffect } from 'react';
@@ -12,6 +12,7 @@ interface DiaryThumbnailProps {
     language: string;
     content: string;
     description: string;
+    tags: string[];
     onDelete: () => void;
 }
 
@@ -59,9 +60,18 @@ export default function DiaryThumbnail(prop: DiaryThumbnailProps) {
         <div>
             <Box sx={{ width: 600, height: 500, backgroundColor: '#eeeeee', boxShadow: 10, borderRadius: 5, color: 'primary.main' }}>
                 <Box sx={{ marginRight: 1, marginLeft: 1, paddingTop: 1, height: 70, fontWeight: 'bold' }}>
-                    <span style={{ fontSize: 22 }}>
-                        {prop.name}  ({prop.language})
-                    </span>
+                    <Box sx={{ display: 'flex', alignItems: 'center', fontSize:22 }}>
+                        <Box sx={{ width:'50%', marginRight: 1 }}>
+                        <Typography variant="body1" sx={{ fontSize: '20px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {prop.name} ({prop.language})
+                        </Typography>
+                        </Box>
+                        <Box sx={{ width:'50%', display: 'flex', justifyContent: 'flex-end', overflow: 'auto' }}>
+                            {prop.tags.map((tag, index) => (
+                                <Chip key={index} label={tag} sx={{ fontSize: '0.75rem' }} size="small" />
+                            ))}
+                        </Box>
+                    </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <FormControl fullWidth>
                             <InputLabel variant="standard" htmlFor="uncontrolled-native"></InputLabel>
